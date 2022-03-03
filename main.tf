@@ -44,47 +44,47 @@ resource "random_password" "mq_application_password" {
   special = false
 }
 
-resource "aws_ssm_parameter" "mq_master_username" {
-  count       = local.enabled && local.mq_admin_user_enabled ? 1 : 0
-  name        = format(var.ssm_parameter_name_format, var.ssm_path, "mq_admin_username")
-  value       = local.mq_admin_user
-  description = "MQ Username for the admin user"
-  type        = "String"
-  overwrite   = var.overwrite_ssm_parameter
-  tags        = module.this.tags
-}
+# resource "aws_ssm_parameter" "mq_master_username" {
+#   count       = local.enabled && local.mq_admin_user_enabled ? 1 : 0
+#   name        = format(var.ssm_parameter_name_format, var.ssm_path, "mq_admin_username")
+#   value       = local.mq_admin_user
+#   description = "MQ Username for the admin user"
+#   type        = "String"
+#   overwrite   = var.overwrite_ssm_parameter
+#   tags        = module.this.tags
+# }
 
-resource "aws_ssm_parameter" "mq_master_password" {
-  count       = local.enabled && local.mq_admin_user_enabled ? 1 : 0
-  name        = format(var.ssm_parameter_name_format, var.ssm_path, "mq_admin_password")
-  value       = local.mq_admin_password
-  description = "MQ Password for the admin user"
-  type        = "SecureString"
-  key_id      = var.kms_ssm_key_arn
-  overwrite   = var.overwrite_ssm_parameter
-  tags        = module.this.tags
-}
+# resource "aws_ssm_parameter" "mq_master_password" {
+#   count       = local.enabled && local.mq_admin_user_enabled ? 1 : 0
+#   name        = format(var.ssm_parameter_name_format, var.ssm_path, "mq_admin_password")
+#   value       = local.mq_admin_password
+#   description = "MQ Password for the admin user"
+#   type        = "SecureString"
+#   key_id      = var.kms_ssm_key_arn
+#   overwrite   = var.overwrite_ssm_parameter
+#   tags        = module.this.tags
+# }
 
-resource "aws_ssm_parameter" "mq_application_username" {
-  count       = local.enabled ? 1 : 0
-  name        = format(var.ssm_parameter_name_format, var.ssm_path, "mq_application_username")
-  value       = local.mq_application_user
-  description = "AMQ username for the application user"
-  type        = "String"
-  overwrite   = var.overwrite_ssm_parameter
-  tags        = module.this.tags
-}
+# resource "aws_ssm_parameter" "mq_application_username" {
+#   count       = local.enabled ? 1 : 0
+#   name        = format(var.ssm_parameter_name_format, var.ssm_path, "mq_application_username")
+#   value       = local.mq_application_user
+#   description = "AMQ username for the application user"
+#   type        = "String"
+#   overwrite   = var.overwrite_ssm_parameter
+#   tags        = module.this.tags
+# }
 
-resource "aws_ssm_parameter" "mq_application_password" {
-  count       = local.enabled ? 1 : 0
-  name        = format(var.ssm_parameter_name_format, var.ssm_path, "mq_application_password")
-  value       = local.mq_application_password
-  description = "AMQ password for the application user"
-  type        = "SecureString"
-  key_id      = var.kms_ssm_key_arn
-  overwrite   = var.overwrite_ssm_parameter
-  tags        = module.this.tags
-}
+# resource "aws_ssm_parameter" "mq_application_password" {
+#   count       = local.enabled ? 1 : 0
+#   name        = format(var.ssm_parameter_name_format, var.ssm_path, "mq_application_password")
+#   value       = local.mq_application_password
+#   description = "AMQ password for the application user"
+#   type        = "SecureString"
+#   key_id      = var.kms_ssm_key_arn
+#   overwrite   = var.overwrite_ssm_parameter
+#   tags        = module.this.tags
+# }
 
 resource "aws_mq_broker" "default" {
   count                      = local.enabled ? 1 : 0
@@ -143,8 +143,8 @@ resource "aws_mq_broker" "default" {
     }
   }
 
-  user {
-    username = local.mq_application_user
-    password = local.mq_application_password
-  }
+  # user {
+  #   username = local.mq_application_user
+  #   password = local.mq_application_password
+  # }
 }
